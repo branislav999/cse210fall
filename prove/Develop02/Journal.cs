@@ -6,7 +6,7 @@ public class Journal
 {
 
     //list that stores user's inputs
-    public List<Entry> entries = new List<Entry>();
+    public List<Entry> _entries = new List<Entry>();
 
     //storing the input in the list
     public void Write()
@@ -18,7 +18,7 @@ public class Journal
         string response = Console.ReadLine();
 
         Entry entry = new Entry(prompt, response);
-        entries.Add(entry);
+        _entries.Add(entry);
         
     }
 
@@ -26,7 +26,7 @@ public class Journal
     public void Display()
     {
         Console.WriteLine("");
-        foreach (Entry entry in entries)
+        foreach (Entry entry in _entries)
         {
             entry.Display();
         }
@@ -49,7 +49,7 @@ public class Journal
         using (StreamWriter outputFile = new StreamWriter(filename))
             
             {
-                foreach (Entry entry in entries)
+                foreach (Entry entry in _entries)
                 {
                     outputFile.WriteLine(entry.GetText());
                 }
@@ -84,7 +84,7 @@ public class Journal
         
         if (password == filePassword)
         {
-            entries.Clear();
+            _entries.Clear();
 
             foreach (string line in lines)
             {
@@ -94,7 +94,7 @@ public class Journal
                 string response = split[2];
 
                 Entry entry = new Entry(prompt, response);
-                entries.Add(entry);
+                _entries.Add(entry);
                 entry.Display();
                 
             }
@@ -112,40 +112,3 @@ public class Journal
 
 
 
-public class Prompt{
-
-    //menu options
-    string _menu = "Choose an option\n \n1.Write a new entry\n2.Display the journal\n3.Save the journal to a file\n4.Load the journal from a file\n5.Exit";
-
-
-    //display menu
-    public void DisplayMenu()
-    {
-        Console.WriteLine("");
-        Console.WriteLine(_menu);
-    }
-
-
-    //list for the prompts
-    public List<string> _prompts = new List<string>(){
-        "What was the best part of my day?",
-        "If I had one thing I could do over today, what would it be? ", 
-        "What is the most important lesson I have learned today? ",
-        "What made me smile or laugh today? "
-    };
-
-  
-
-
-    //get a random prompt from the _prompts list
-    public string GetPrompt(){
-        var random = new Random();
-        int index = random.Next(_prompts.Count);
-        string prompt = _prompts[index];
-        return prompt;
-    }
-
-    
-
-    
-}
