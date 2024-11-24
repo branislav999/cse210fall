@@ -6,7 +6,6 @@ public abstract class Base
     protected string _goalTitle;
     protected string _goalDescription;
     protected int _points;
-    
 
     public void SetTitle(string goalTitle)
     {
@@ -27,7 +26,7 @@ public abstract class Base
     {
         return false;
     }
-    
+
     public virtual void GetInput()
     {
         Console.WriteLine("Enter the goal title: ");
@@ -37,11 +36,9 @@ public abstract class Base
         Console.WriteLine("Enter points for achieving the goal: ");
         _points = int.Parse(Console.ReadLine());
     }
-    
-       
+
     public abstract string GetSaveText();
     public abstract string GetDisplayText();
-
 
     public virtual int GetPoints()
     {
@@ -50,9 +47,6 @@ public abstract class Base
 
     public virtual void Completed()
     {
-
     }
-
-
 
 }

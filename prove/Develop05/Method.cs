@@ -2,9 +2,8 @@ using System;
 
 public class Method
 {
-    List<Base> goals = new List<Base>();
-    private int totalPoints;
-
+    List<Base> _goals = new List<Base>();
+    private int _totalPoints;
 
     public void CreateNewGoal()
     {
@@ -12,207 +11,185 @@ public class Method
         Console.WriteLine("2. Eternal Goal");
         Console.WriteLine("3. Checklist Goal");
         Console.Write("Enter the type of goal (1-3): ");
-        int type = int.Parse(Console.ReadLine());
+        int _type = int.Parse(Console.ReadLine());
 
-        
-
-
-        if (type == 1)
+        if (_type == 1)
         {
-            Base simpleGoal = new SimpleGoal();
-            simpleGoal.GetInput();
-            goals.Add(simpleGoal);
+            Base _simpleGoal = new SimpleGoal();
+            _simpleGoal.GetInput();
+            _goals.Add(_simpleGoal);
         }
-        else if (type == 2)
+        else if (_type == 2)
         {
-            Base eternalGoal = new EternalGoal();
-            eternalGoal.GetInput();
-            goals.Add(eternalGoal);
+            Base _eternalGoal = new EternalGoal();
+            _eternalGoal.GetInput();
+            _goals.Add(_eternalGoal);
         }
         else
         {
-            Base checklistGoal = new ChecklistGoal();
-            checklistGoal.GetInput();
-            goals.Add(checklistGoal);
+            Base _checklistGoal = new ChecklistGoal();
+            _checklistGoal.GetInput();
+            _goals.Add(_checklistGoal);
         }
-        
     }
+
     public void Save()
     {
         Console.WriteLine("\nEnter the name of the file: ");
-        string fileName = Console.ReadLine();
-        using (StreamWriter outputFile = new StreamWriter(fileName))
+        string _fileName = Console.ReadLine();
+        using (StreamWriter _outputFile = new StreamWriter(_fileName))
         {
-            outputFile.WriteLine(totalPoints);
+            _outputFile.WriteLine(_totalPoints);
 
-            foreach (Base goal in goals)
+            foreach (Base _goal in _goals)
             {
-                outputFile.WriteLine(goal.GetSaveText());
-            }            
-            
+                _outputFile.WriteLine(_goal.GetSaveText());
+            }
         }
     }
-    
-public void Load()
+
+    public void Load()
     {
-        goals.Clear();
+        _goals.Clear();
 
         Console.WriteLine("\nWhat is the name of the file: ");
-        string filename = Console.ReadLine();
-        string[] lines = System.IO.File.ReadAllLines(filename);
+        string _filename = Console.ReadLine();
+        string[] _lines = System.IO.File.ReadAllLines(_filename);
 
-
-        if (lines.Length > 0)
+        if (_lines.Length > 0)
         {
-            string first_line = lines[0];
-            int loadedPoints = int.Parse(first_line);
-            totalPoints = loadedPoints;
+            string _firstLine = _lines[0];
+            int _loadedPoints = int.Parse(_firstLine);
+            _totalPoints = _loadedPoints;
 
-
-        for (int i = 1; i < lines.Length; i++)
-        {
-
-            string[] parts = lines[i].Split("~");
-
-
-            string goalType = parts[0];
-            string checkmark = parts[1];
-            string goalTitle = parts[2];
-            string goalDescription = parts[3];
-            int points = int.Parse(parts[4]);
-            int bonusPoints = 0;
-            int accomplished = 0;
-            int desired = 0;
-
-            if (goalType == "Checklist Goal:")
+            for (int i = 1; i < _lines.Length; i++)
             {
-                accomplished = int.Parse(parts[5]);
-                desired = int.Parse(parts[6]);
-                bonusPoints = int.Parse(parts[7]);               
+                string[] _parts = _lines[i].Split("~");
+
+                string _goalType = _parts[0];
+                string _checkmark = _parts[1];
+                string _goalTitle = _parts[2];
+                string _goalDescription = _parts[3];
+                int _points = int.Parse(_parts[4]);
+                int _bonusPoints = 0;
+                int _accomplished = 0;
+                int _desired = 0;
+
+                if (_goalType == "Checklist Goal:")
+                {
+                    _accomplished = int.Parse(_parts[5]);
+                    _desired = int.Parse(_parts[6]);
+                    _bonusPoints = int.Parse(_parts[7]);
+                }
+
+                switch (_goalType)
+                {
+                    case "Simple Goal:":
+                        SimpleGoal _simple = new SimpleGoal();
+                        _simple.SetTitle(_goalTitle);
+                        _simple.SetDescription(_goalDescription);
+                        _simple.SetPoints(_points);
+                        _goals.Add(_simple);
+                        break;
+
+                    case "Eternal Goal:":
+                        EternalGoal _eternal = new EternalGoal();
+                        _eternal.SetTitle(_goalTitle);
+                        _eternal.SetDescription(_goalDescription);
+                        _eternal.SetPoints(_points);
+                        _goals.Add(_eternal);
+                        break;
+
+                    case "Checklist Goal:":
+                        ChecklistGoal _checklist = new ChecklistGoal();
+                        _checklist.SetTitle(_goalTitle);
+                        _checklist.SetDescription(_goalDescription);
+                        _checklist.SetPoints(_points);
+                        _checklist.SetBonusPoints(_bonusPoints);
+                        _checklist.SetAccomplished(_accomplished);
+                        _checklist.SetDesired(_desired);
+                        _goals.Add(_checklist);
+                        break;
+                }
             }
-
-            
-
-            switch (goalType)
-            {
-                case "Simple Goal:":
-                    SimpleGoal simple = new SimpleGoal();
-                    simple.SetTitle(goalTitle);
-                    simple.SetDescription(goalDescription);
-                    simple.SetPoints(points);
-                    goals.Add(simple);
-                    break;
-                
-                case "Eternal Goal:":
-                    EternalGoal eternal = new EternalGoal();
-                    eternal.SetTitle(goalTitle);
-                    eternal.SetDescription(goalDescription);
-                    eternal.SetPoints(points);
-                    goals.Add(eternal);
-                    break;
-                
-                
-                case "Checklist Goal:":
-                    ChecklistGoal checklist = new ChecklistGoal();
-                    checklist.SetTitle(goalTitle);
-                    checklist.SetDescription(goalDescription);
-                    checklist.SetPoints(points);
-                    checklist.SetBonusPoints(bonusPoints);
-                    checklist.SetAccomplished(accomplished);
-                    checklist.SetDesired(desired);
-                    goals.Add(checklist);
-                    break;
-                    
-
-            }
-        }
         }
     }
-
 
     public void ListGoals()
     {
         Console.WriteLine("\nThe goals are:");
 
-        for (int i = 0; i < goals.Count; i++)
+        for (int i = 0; i < _goals.Count; i++)
         {
-            Console.WriteLine($"{i + 1}. {goals[i].GetDisplayText()}");
+            Console.WriteLine($"{i + 1}. {_goals[i].GetDisplayText()}");
         }
 
-        Console.WriteLine($"You have {totalPoints} points.");
+        Console.WriteLine($"You have {_totalPoints} points.");
     }
 
     public void RecordEvent()
     {
-
         Console.WriteLine("\nThe goals are:");
-        for (int i = 0; i < goals.Count; i++)
+        for (int i = 0; i < _goals.Count; i++)
         {
-            Console.WriteLine($"{i + 1}. {goals[i].GetDisplayText()}");
+            Console.WriteLine($"{i + 1}. {_goals[i].GetDisplayText()}");
         }
 
         Console.Write("\nWhich goal did you accomplish (enter the goal number): ");
-        int goalNumber = int.Parse(Console.ReadLine());
+        int _goalNumber = int.Parse(Console.ReadLine());
 
-        
-        Base goal = goals[goalNumber - 1];
+        Base _goal = _goals[_goalNumber - 1];
 
-        if (goal.IsCompleted())
+        if (_goal.IsCompleted())
         {
             Console.WriteLine("\nThe goal is already completed.");
         }
         else
         {
-            goal.Completed();
+            _goal.Completed();
 
-            totalPoints += goal.GetPoints();
-            Console.WriteLine($"\nCongratulations, you have earned {goal.GetPoints()} points.");
-            Console.WriteLine($"You now have {totalPoints} points.");
+            _totalPoints += _goal.GetPoints();
+            Console.WriteLine($"\nCongratulations, you have earned {_goal.GetPoints()} points.");
+            Console.WriteLine($"You now have {_totalPoints} points.");
         }
-        
     }
 
     public void Edit()
     {
-    Console.WriteLine("Edit Goals:");
-    Console.WriteLine("   1. Edit Title");
-    Console.WriteLine("   2. Edit Description");
-    Console.WriteLine("   3. Edit Points");
-    Console.WriteLine("   4. Cancel");
+        Console.WriteLine("Edit Goals:");
+        Console.WriteLine("   1. Edit Title");
+        Console.WriteLine("   2. Edit Description");
+        Console.WriteLine("   3. Edit Points");
+        Console.WriteLine("   4. Cancel");
 
-    Console.Write("Enter your choice: ");
-    int choice = int.Parse(Console.ReadLine());
+        Console.Write("Enter your choice: ");
+        int _choice = int.Parse(Console.ReadLine());
 
-    Console.WriteLine("Select a goal to edit:");
-    ListGoals(); 
+        Console.WriteLine("Select a goal to edit:");
+        ListGoals();
 
-    Console.Write("Enter the goal number to edit: ");
-    int goalNumber = int.Parse(Console.ReadLine());
+        Console.Write("Enter the goal number to edit: ");
+        int _goalNumber = int.Parse(Console.ReadLine());
 
-    
-    {
-        Base goal = goals[goalNumber - 1];
+        Base _goal = _goals[_goalNumber - 1];
 
-        switch (choice)
+        switch (_choice)
         {
             case 1:
                 Console.Write("Enter the new title: ");
-                goal.SetTitle(Console.ReadLine());
+                _goal.SetTitle(Console.ReadLine());
                 break;
             case 2:
                 Console.Write("Enter the new description: ");
-                goal.SetDescription(Console.ReadLine());
+                _goal.SetDescription(Console.ReadLine());
                 break;
             case 3:
                 Console.Write("Enter the new points: ");
-                goal.SetPoints(int.Parse(Console.ReadLine()));
+                _goal.SetPoints(int.Parse(Console.ReadLine()));
                 break;
-            
         }
 
         Console.WriteLine("\nThis is the updated goal: ");
-        Console.WriteLine(goal.GetDisplayText());
+        Console.WriteLine(_goal.GetDisplayText());
     }
-    }
-
 }

@@ -4,10 +4,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        Method instance = new Method();
-        bool loop = true;
+        Method _instance = new Method();
+        bool _loop = true;
 
-        while (loop)
+        while (_loop)
         {
             Console.WriteLine("\nMenu options:");
             Console.WriteLine("   1. Create New Goal");
@@ -19,33 +19,31 @@ class Program
             Console.WriteLine("   7. Quit");
 
             Console.Write("Enter your choice: ");
-            int choice = int.Parse(Console.ReadLine());
+            int _choice = int.Parse(Console.ReadLine());
 
-            switch (choice)
+            switch (_choice)
             {
                 case 1:
-                    instance.CreateNewGoal();
+                    _instance.CreateNewGoal();
                     break;
                 case 2:
-                    instance.ListGoals();
+                    _instance.ListGoals();
                     break;
                 case 3:
-                    instance.Edit();
+                    _instance.Edit();
                     break;
                 case 4:
-                    instance.Save();
+                    _instance.Save();
                     break;
                 case 5:
-                    instance.Load();
+                    _instance.Load();
                     break;
                 case 6:
-                    instance.RecordEvent();
+                    _instance.RecordEvent();
                     break;
                 case 7:
-                    loop = false;
+                    _loop = false;
                     break;
-                
-                
             }
         }
     }

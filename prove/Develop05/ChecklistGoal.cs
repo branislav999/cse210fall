@@ -23,9 +23,6 @@ public class ChecklistGoal : Base
         _desired = desired;
     }
 
-
-   
-
     public override void GetInput()
     {
         base.GetInput();
@@ -33,39 +30,37 @@ public class ChecklistGoal : Base
         _desired = int.Parse(Console.ReadLine());
         Console.WriteLine($"Enter bonus points for accomplishing the goal {_desired} number of times: ");
         _bonusPoints = int.Parse(Console.ReadLine());
-        
     }
 
     public override string GetSaveText()
     {
-        string isCompleted;
+        string _isCompleted;
         if (_completed)
         {
-            isCompleted = "[X]";
+            _isCompleted = "[X]";
         }
         else
         {
-            isCompleted = "[ ]";
+            _isCompleted = "[ ]";
         }
 
-        return $"Checklist Goal:~{isCompleted}~{_goalTitle}~{_goalDescription}~{_points}~{_accomplished}~{_desired}~{_bonusPoints}";
+        return $"Checklist Goal:~{_isCompleted}~{_goalTitle}~{_goalDescription}~{_points}~{_accomplished}~{_desired}~{_bonusPoints}";
     }
- 
+
     public override string GetDisplayText()
     {
-        string isCompleted;
+        string _isCompleted;
 
         if (_completed)
         {
-            isCompleted = "[x]";
+            _isCompleted = "[x]";
         }
         else
         {
-            isCompleted = "[ ]";
+            _isCompleted = "[ ]";
         }
-        return $"Checklist Goal: {isCompleted} {_goalTitle} ({_goalDescription}) You get {_points} points for doing the goal. --Completed {_accomplished}/{_desired} times. You get {_bonusPoints} after completing it.";
+        return $"Checklist Goal: {_isCompleted} {_goalTitle} ({_goalDescription}) You get {_points} points for doing the goal. --Completed {_accomplished}/{_desired} times. You get {_bonusPoints} after completing it.";
     }
-
 
     public override void Completed()
     {
@@ -89,11 +84,8 @@ public class ChecklistGoal : Base
         }
     }
 
-
-    
     public override bool IsCompleted()
     {
         return _completed;
     }
-
 }

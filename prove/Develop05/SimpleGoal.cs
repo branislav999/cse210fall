@@ -2,37 +2,35 @@ public class SimpleGoal : Base
 {
     private bool _completed = false;
 
-    
     public override string GetSaveText()
     {
-        string isCompleted;
+        string _isCompleted;
 
         if (_completed)
         {
-            isCompleted = "[x]";
+            _isCompleted = "[x]";
         }
         else
         {
-            isCompleted = "[ ]";
+            _isCompleted = "[ ]";
         }
-        return $"Simple Goal:~{isCompleted}~{_goalTitle}~{_goalDescription}~{_points}";
+        return $"Simple Goal:~{_isCompleted}~{_goalTitle}~{_goalDescription}~{_points}";
     }
 
     public override string GetDisplayText()
     {
-        string isCompleted;
+        string _isCompleted;
 
         if (_completed)
         {
-            isCompleted = "[x]";
+            _isCompleted = "[x]";
         }
         else
         {
-            isCompleted = "[ ]";
+            _isCompleted = "[ ]";
         }
-        return $"Simple Goal: {isCompleted} {_goalTitle} ({_goalDescription}). You get {_points} points for doing this goal. ";
+        return $"Simple Goal: {_isCompleted} {_goalTitle} ({_goalDescription}). You get {_points} points for doing this goal. ";
     }
-
 
     public override void Completed()
     {
@@ -43,6 +41,4 @@ public class SimpleGoal : Base
     {
         return _completed;
     }
-
-
 }
